@@ -83,6 +83,10 @@ Autolinker.match.Mention = Autolinker.Util.extend( Autolinker.match.Match, {
 				return 'https://twitter.com/' + this.mention;
 			case 'instagram' :
 				return 'https://instagram.com/' + this.mention;
+			case 'steemit' :
+				return 'https://steemit.com/@' + this.mention;
+			case 'dtube' :
+				return 'https://dtube.video/c/' + this.mention;
 
 			default :  // Shouldn't happen because Autolinker's constructor should block any invalid values, but just in case.
 				throw new Error( 'Unknown service name to point mention to: ', this.serviceName );
