@@ -16,7 +16,6 @@ const clone           = require( 'gulp-clone' ),
       typescript      = require( 'gulp-typescript' ),
       uglify          = require( 'gulp-uglify' ),
       umd             = require( 'gulp-umd' ),
-      JsDuck          = require( 'gulp-jsduck' ),
       KarmaServer     = require( 'karma' ).Server;
 
 
@@ -66,21 +65,14 @@ function buildTask() {
 
 
 function docTask() {
-	var jsduck = new JsDuck( [
-		'--out',               './docs/api',
-		'--title',             'Autolinker v' + pkg.version + ' API Docs',
-		'--examples',          './docs/examples.json',
-		'--examples-base-url', './docs/'
-	] );
-
 	return merge(
 		// Move dist files into the docs/ folder so they can be served
 		// by GitHub pages
 		gulp.src( `${distFolder}/**/*` )
 			.pipe( gulp.dest( './docs/dist' ) ),
 
-		gulp.src( srcFilesGlob )
-			.pipe( jsduck.doc() )
+		// gulp.src( srcFilesGlob )
+		// 	.pipe( jsduck.doc() )
 	);
 }
 
@@ -235,4 +227,3 @@ function updateTldRegex(){
 		}))
 		.pipe(gulp.dest('./src/matcher/'));
 }
-
