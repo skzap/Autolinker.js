@@ -142,7 +142,7 @@ var Autolinker = function( cfg ) {
 
 	// Validate the value of the `mention` cfg
 	var mention = this.mention;
-	if( mention !== false && mention !== 'twitter' && mention !== 'instagram' ) {
+	if( mention !== false && mention !== 'twitter' && mention !== 'instagram' && mention !== 'steemit' && mention !== 'dtube') {
 		throw new Error( "invalid `mention` cfg - see docs" );
 	}
 
@@ -2842,6 +2842,10 @@ Autolinker.match.Mention = Autolinker.Util.extend( Autolinker.match.Match, {
 				return 'https://twitter.com/' + this.mention;
 			case 'instagram' :
 				return 'https://instagram.com/' + this.mention;
+			case 'steemit' :
+				return 'https://steemit.com/@' + this.mention;
+			case 'dtube' :
+				return 'https://dtube.video/c/' + this.mention;
 
 			default :  // Shouldn't happen because Autolinker's constructor should block any invalid values, but just in case.
 				throw new Error( 'Unknown service name to point mention to: ', this.serviceName );
@@ -3373,7 +3377,7 @@ Autolinker.matcher.Phone = Autolinker.Util.extend( Autolinker.matcher.Matcher, {
 			var matchedText = match[0],
 				cleanNumber = matchedText.replace(/[^0-9,;#]/g, ''), // strip out non-digit characters exclude comma semicolon and #
 				plusSign = !!match[1]; // match[ 1 ] is the prefixed plus sign, if there is one
-			if (/\D/.test(match[2]) && /\D/.test(matchedText)) {
+			if (this.testMatch(match[2]) && this.testMatch(matchedText)) {
     			matches.push(new Autolinker.match.Phone({
     				tagBuilder: tagBuilder,
     				matchedText: matchedText,
@@ -3385,9 +3389,14 @@ Autolinker.matcher.Phone = Autolinker.Util.extend( Autolinker.matcher.Matcher, {
 		}
 
 		return matches;
+	},
+
+	testMatch: function(text) {
+		return /\D/.test(text);
 	}
 
 } );
+
 /*global Autolinker */
 /**
  * @class Autolinker.matcher.Mention
@@ -3407,7 +3416,9 @@ Autolinker.matcher.Mention = Autolinker.Util.extend( Autolinker.matcher.Matcher,
 	 */
 	matcherRegexes : {
 		"twitter": new RegExp( '@[_' + Autolinker.RegexLib.alphaNumericCharsStr + ']{1,20}', 'g' ),
-		"instagram": new RegExp( '@[_.' + Autolinker.RegexLib.alphaNumericCharsStr + ']{1,50}', 'g' )
+		"instagram": new RegExp( '@[_.' + Autolinker.RegexLib.alphaNumericCharsStr + ']{1,50}', 'g' ),
+		"steemit": new RegExp( '@[_.' + Autolinker.RegexLib.alphaNumericCharsStr + ']{1,50}', 'g' ),
+		"dtube": new RegExp( '@[_.' + Autolinker.RegexLib.alphaNumericCharsStr + ']{1,50}', 'g' )
 	},
 
 	/**
