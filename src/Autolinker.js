@@ -130,7 +130,7 @@ var Autolinker = function( cfg ) {
 
 	// Validate the value of the `hashtag` cfg
 	var hashtag = this.hashtag;
-	if( hashtag !== false && hashtag !== 'twitter' && hashtag !== 'facebook' && hashtag !== 'instagram' ) {
+	if( hashtag !== false && hashtag !== 'twitter' && hashtag !== 'facebook' && hashtag !== 'instagram'  && hashtag !== 'steemit'  && hashtag !== 'dtube' ) {
 		throw new Error( "invalid `hashtag` cfg - see docs" );
 	}
 

@@ -90,6 +90,10 @@ Autolinker.match.Hashtag = Autolinker.Util.extend( Autolinker.match.Match, {
 				return 'https://www.facebook.com/hashtag/' + hashtag;
 			case 'instagram' :
 				return 'https://instagram.com/explore/tags/' + hashtag;
+			case 'steemit' :
+				return 'https://steemit.com/trending/' + hashtag;
+			case 'dtube' :
+				return '/t/' + hashtag;
 
 			default :  // Shouldn't happen because Autolinker's constructor should block any invalid values, but just in case.
 				throw new Error( 'Unknown service name to point hashtag to: ', serviceName );

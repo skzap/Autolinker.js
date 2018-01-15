@@ -2,7 +2,7 @@
  * Autolinker.js
  * 1.4.3
  *
- * Copyright(c) 2017 Gregory Jacobs <greg@greg-jacobs.com>
+ * Copyright(c) 2018 Gregory Jacobs <greg@greg-jacobs.com>
  * MIT License
  *
  * https://github.com/gregjacobs/Autolinker.js
@@ -148,7 +148,7 @@ var Autolinker = function( cfg ) {
 
 	// Validate the value of the `hashtag` cfg
 	var hashtag = this.hashtag;
-	if( hashtag !== false && hashtag !== 'twitter' && hashtag !== 'facebook' && hashtag !== 'instagram' ) {
+	if( hashtag !== false && hashtag !== 'twitter' && hashtag !== 'facebook' && hashtag !== 'instagram'  && hashtag !== 'steemit'  && hashtag !== 'dtube' ) {
 		throw new Error( "invalid `hashtag` cfg - see docs" );
 	}
 
@@ -2648,6 +2648,10 @@ Autolinker.match.Hashtag = Autolinker.Util.extend( Autolinker.match.Match, {
 				return 'https://www.facebook.com/hashtag/' + hashtag;
 			case 'instagram' :
 				return 'https://instagram.com/explore/tags/' + hashtag;
+			case 'steemit' :
+				return 'https://steemit.com/trending/' + hashtag;
+			case 'dtube' :
+				return '/t/' + hashtag;
 
 			default :  // Shouldn't happen because Autolinker's constructor should block any invalid values, but just in case.
 				throw new Error( 'Unknown service name to point hashtag to: ', serviceName );
@@ -2845,7 +2849,7 @@ Autolinker.match.Mention = Autolinker.Util.extend( Autolinker.match.Match, {
 			case 'steemit' :
 				return 'https://steemit.com/@' + this.mention;
 			case 'dtube' :
-				return 'https://dtube.video/c/' + this.mention;
+				return '/c/' + this.mention;
 
 			default :  // Shouldn't happen because Autolinker's constructor should block any invalid values, but just in case.
 				throw new Error( 'Unknown service name to point mention to: ', this.serviceName );
@@ -3417,8 +3421,8 @@ Autolinker.matcher.Mention = Autolinker.Util.extend( Autolinker.matcher.Matcher,
 	matcherRegexes : {
 		"twitter": new RegExp( '@[_' + Autolinker.RegexLib.alphaNumericCharsStr + ']{1,20}', 'g' ),
 		"instagram": new RegExp( '@[_.' + Autolinker.RegexLib.alphaNumericCharsStr + ']{1,50}', 'g' ),
-		"steemit": new RegExp( '@[_.' + Autolinker.RegexLib.alphaNumericCharsStr + ']{1,50}', 'g' ),
-		"dtube": new RegExp( '@[_.' + Autolinker.RegexLib.alphaNumericCharsStr + ']{1,50}', 'g' )
+		"steemit": new RegExp( '@[_.\-' + Autolinker.RegexLib.alphaNumericCharsStr + ']{1,50}', 'g' ),
+		"dtube": new RegExp( '@[_.\-' + Autolinker.RegexLib.alphaNumericCharsStr + ']{1,50}', 'g' )
 	},
 
 	/**
